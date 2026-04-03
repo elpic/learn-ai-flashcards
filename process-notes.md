@@ -87,3 +87,9 @@
 - Verification: Learner confirmed both extractors pass - ReadabilityExtractor extracts Wikipedia content with title and 82K chars of text, PlainTextExtractor returns input unchanged.
 - Comprehension check: "When ReadabilityExtractor fails to parse as an article, what does it do next?" - "Falls back to body.textContent" - Correct.
 - Issues: Minor typecheck fix needed for nullable textContent property on Readability parse result.
+
+### Step 8: Anthropic card generator adapter
+- What was built: AnthropicCardGenerator class implementing CardGenerator port. Uses Claude (claude-sonnet-4-20250514) with tool use and a Zod schema to enforce structured Deck output. System prompt targets 15-17 year olds with clear language rules, 10-20 cards for substantial content, minimum 2 for short input, and quality-over-quantity guidance. Zod 4's toJSONSchema() converts the schema to JSON Schema for the tool definition. Test script verifies both substantial and short input cases.
+- Verification: Test script ran successfully - photosynthesis passage produced 12 cards (mix of question/fact types, student-friendly language). Single sentence about mitochondria produced 6 cards (Claude expanded context as instructed). All cards have valid type, front, back, topic, and cardNumber fields.
+- Comprehension check: Pending learner response.
+- Issues: None.
