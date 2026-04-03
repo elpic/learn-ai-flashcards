@@ -28,7 +28,7 @@
   Acceptance: Cards render with front content visible. Clicking/tapping a card flips it with a smooth animation to show the back. Topic tag and card number are visible. Question and fact cards have distinct icons. Cards look warm and student-friendly.
   Verify: Run `mise run dev`. Confirm cards render below the input. Click a card — confirm it flips smoothly. Check that question cards show "?" and fact cards show a lightbulb (or similar). Confirm card styling matches the warm vibe.
 
-- [ ] **4. CardGrid + scroll-reveal animation**
+- [x] **4. CardGrid + scroll-reveal animation**
   Spec ref: `spec.md > Frontend > Components > CardGrid`
   What to build: Create `CardGrid` component that renders an array of `FlashCard` components in a scrollable layout. Implement scroll-reveal animation using the Intersection Observer API — cards should slide or fade into view one by one as the user scrolls down. Replace the temporary card rendering from step 3 with the CardGrid component. Feed it the full mock deck (all 5-6 cards) so there's enough to scroll through. The reveal animation should be smooth and feel playful — this is one of the "wow moments."
   Acceptance: Cards appear in a scrollable grid layout. Scrolling down reveals cards one by one with animation. The animation feels smooth and polished. All mock cards render correctly within the grid.
