@@ -51,3 +51,9 @@
 - Verification: `tsc --noEmit` passed with zero errors. All domain types importable. Mock data returns valid Deck. Folder structure matches spec.
 - Comprehension check: "Which directory contains the interfaces that infrastructure adapters must implement?" → "src/domain/ports/" ✓ Correct.
 - Issues: None. create-next-app required initialization in a temp directory due to existing files, then copied over.
+
+### Step 2: LandingHero + InputField + useInputDetection
+- What was built: Landing page with warm cream/orange design. LandingHero with approachable copy for teenagers. InputField with auto-expanding textarea, URL detection badge, and disabled Generate button. useInputDetection hook with regex-based URL/text/empty classification.
+- Verification: Dev server confirmed hero text visible, URL detection badge appears on URL paste, textarea expands for long text, warm vibe achieved. Fixed right padding issue - was using pr-36 always, now conditional on URL badge visibility.
+- Comprehension check: "What determines whether input is classified as a URL?" -> "Regex testing for http:// or https://" - Correct.
+- Issues: Textarea had excessive right padding (pr-36) for non-URL text to accommodate the URL badge. Fixed to conditional padding.
