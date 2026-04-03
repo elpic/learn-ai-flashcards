@@ -81,3 +81,9 @@
 - Verification: Learner confirmed export button downloads a .txt file with correct tab-separated format and topic+type tags.
 - Comprehension check: "What character separates the columns in the exported file?" - "Comma" - Incorrect. Explained it's the tab character (\t), Anki's native import format.
 - Issues: None.
+
+### Step 7: Content extraction adapters
+- What was built: ReadabilityExtractor class implementing ContentExtractor port - fetches URLs server-side, parses HTML with jsdom, extracts article content via @mozilla/readability with fallback to body.textContent for non-article pages. PlainTextExtractor as a minimal passthrough wrapper. Integration test script verifying both extractors against a Wikipedia article.
+- Verification: Learner confirmed both extractors pass - ReadabilityExtractor extracts Wikipedia content with title and 82K chars of text, PlainTextExtractor returns input unchanged.
+- Comprehension check: "When ReadabilityExtractor fails to parse as an article, what does it do next?" - "Falls back to body.textContent" - Correct.
+- Issues: Minor typecheck fix needed for nullable textContent property on Readability parse result.
