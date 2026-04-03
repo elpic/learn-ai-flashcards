@@ -2,26 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Warm color palette ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds */
+  --color-bg-base: #fffbeb;       /* warm cream */
+  --color-bg-surface: #ffffff;    /* card / input surface */
+  --color-bg-subtle: #fef3c7;     /* slightly warmer tint */
+
+  /* Foreground */
+  --color-text-primary: #1c1917;  /* stone-900 */
+  --color-text-secondary: #78716c; /* stone-500 */
+  --color-text-muted: #a8a29e;    /* stone-400 */
+
+  /* Brand / accent */
+  --color-accent: #f97316;        /* orange-500 */
+  --color-accent-hover: #ea6c0a;  /* orange-600 */
+  --color-accent-light: #ffedd5;  /* orange-100 */
+
+  /* Amber / yellow tones */
+  --color-amber: #fbbf24;         /* amber-400 */
+  --color-amber-light: #fef3c7;   /* amber-100 */
+
+  /* Borders */
+  --color-border: #fde68a;        /* amber-200 */
+  --color-border-focus: #fb923c;  /* orange-400 */
+
+  /* Shadows */
+  --shadow-warm: 0 4px 24px 0 rgba(251, 146, 60, 0.10);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ── Base styles ── */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Utilities ── */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .shadow-warm {
+    box-shadow: var(--shadow-warm);
   }
 }
