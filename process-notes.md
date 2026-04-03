@@ -69,3 +69,9 @@
 - Verification: Dev server confirmed all 6 cards render, scroll-reveal animation triggers smoothly as cards enter viewport, flip animation still works on all cards, cards are centered and properly sized.
 - Comprehension check: "Which browser API does the CardGrid use to detect when a card enters the viewport?" - "Intersection Observer" - Correct.
 - Issues: Initial implementation had width/alignment issues - RevealWrapper div needed `w-full` and `flex justify-center` to properly size and center the cards within the grid.
+
+### Step 5: LoadingState + StickyHeader
+- What was built: LoadingState component with 3 shimmer/pulse placeholder cards and a warm loading message. StickyHeader component with frosted glass background and "Export to Anki" button that sticks to viewport top. Shimmer keyframe animation added to globals.css. Page wired with temporary state toggle (idle/loading/cards) for visual testing.
+- Verification: Learner confirmed both components look great - loading shimmer animates, sticky header stays fixed while scrolling, scroll-reveal animations unaffected.
+- Comprehension check: "What CSS technique makes the header stay visible at the top?" - "position: sticky" - Correct.
+- Issues: None.
