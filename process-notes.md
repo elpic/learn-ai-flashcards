@@ -57,3 +57,9 @@
 - Verification: Dev server confirmed hero text visible, URL detection badge appears on URL paste, textarea expands for long text, warm vibe achieved. Fixed right padding issue - was using pr-36 always, now conditional on URL badge visibility.
 - Comprehension check: "What determines whether input is classified as a URL?" -> "Regex testing for http:// or https://" - Correct.
 - Issues: Textarea had excessive right padding (pr-36) for non-URL text to accommodate the URL badge. Fixed to conditional padding.
+
+### Step 3: FlashCard component + tap-to-flip
+- What was built: FlashCard component with CSS rotateY flip animation, topic tag badge, card number display ("N of total"), and type icon (? for question, sparkle for fact). Front face is white with amber border, back face is orange-tinted. 3 mock cards rendered temporarily below the input for visual testing.
+- Verification: Dev server confirmed cards render, flip animation works smoothly, question/fact icons display correctly, warm styling matches existing design.
+- Comprehension check: "What CSS property creates the 3D flip effect?" - "transform: rotateY(180deg)" - Correct.
+- Issues: `next build` has a pre-existing prerender error (useContext null during SSG), unrelated to this step. Dev server works fine.

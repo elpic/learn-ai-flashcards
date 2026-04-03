@@ -22,7 +22,7 @@
   Acceptance: Landing page loads with hero text and input field visible without scrolling. Typing a URL shows URL detection feedback. Typing plain text shows text mode. Input auto-expands for long text. Visual design feels warm and student-friendly, not developer-minimal. Generate button is present but non-functional.
   Verify: Run `mise run dev` and open localhost. Confirm: hero text is visible and reads naturally for a teenager. Paste a URL — confirm the input detects it. Paste a long paragraph — confirm the input expands. Confirm the overall vibe feels warm and inviting.
 
-- [ ] **3. FlashCard component + tap-to-flip**
+- [x] **3. FlashCard component + tap-to-flip**
   Spec ref: `spec.md > Frontend > Components > FlashCard`
   What to build: Create `FlashCard` component that displays a card's front side by default. Implement tap/click to flip with a CSS transform animation (rotateY). Show the topic tag and card number ("3 of 15") on each card. Add a small icon differentiating question cards (e.g., "?" icon) from fact cards (e.g., lightbulb icon). Style with warm design — rounded corners, soft shadows, approachable colors consistent with the landing page. Render 2-3 mock cards directly on the page below the input (temporary layout for visual testing — will be replaced by CardGrid in next step).
   Acceptance: Cards render with front content visible. Clicking/tapping a card flips it with a smooth animation to show the back. Topic tag and card number are visible. Question and fact cards have distinct icons. Cards look warm and student-friendly.
