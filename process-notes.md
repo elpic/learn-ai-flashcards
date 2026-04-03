@@ -63,3 +63,9 @@
 - Verification: Dev server confirmed cards render, flip animation works smoothly, question/fact icons display correctly, warm styling matches existing design.
 - Comprehension check: "What CSS property creates the 3D flip effect?" - "transform: rotateY(180deg)" - Correct.
 - Issues: `next build` has a pre-existing prerender error (useContext null during SSG), unrelated to this step. Dev server works fine.
+
+### Step 4: CardGrid + scroll-reveal animation
+- What was built: CardGrid component with RevealWrapper using Intersection Observer API. Cards fade and slide up into view (opacity 0 + translate-y-8 to visible) with 500ms ease-out transition. Staggered reveal delay (120ms per card index) for cards visible on initial load. Replaced temporary 3-card rendering in page.tsx with CardGrid showing all 6 mock cards.
+- Verification: Dev server confirmed all 6 cards render, scroll-reveal animation triggers smoothly as cards enter viewport, flip animation still works on all cards, cards are centered and properly sized.
+- Comprehension check: "Which browser API does the CardGrid use to detect when a card enters the viewport?" - "Intersection Observer" - Correct.
+- Issues: Initial implementation had width/alignment issues - RevealWrapper div needed `w-full` and `flex justify-center` to properly size and center the cards within the grid.
