@@ -10,7 +10,7 @@
 
 ## Checklist
 
-- [ ] **1. Project scaffolding + domain types**
+- [x] **1. Project scaffolding + domain types**
   Spec ref: `spec.md > Architecture Overview` + `spec.md > Domain Layer` + `spec.md > File Structure`
   What to build: Initialize Next.js 14 with App Router and TypeScript. Install all dependencies from the spec (Anthropic SDK, Zod, Readability, jsdom, Tailwind). Create the full folder structure: `src/domain/models/`, `src/domain/ports/`, `src/infrastructure/anthropic/`, `src/infrastructure/readability/`, `src/infrastructure/export/`, `src/hooks/`, `src/services/`, `src/components/`. Implement all domain types — `Card`, `CardType`, `Deck` in models; `CardGenerator`, `ContentExtractor` (with `ExtractedContent`), `DeckExporter` (with `ExportedFile`) as port interfaces. Create a mock deck factory (`src/lib/mock-data.ts`) with 5-6 sample cards (mix of question and fact types, varied topics) for use in upcoming UI steps.
   Acceptance: `mise run typecheck` passes with zero errors. All domain types are importable. Mock data factory returns a valid `Deck` object. Folder structure matches the spec diagram.
