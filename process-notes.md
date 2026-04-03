@@ -1,0 +1,34 @@
+# Process Notes
+
+## /onboard
+- **Technical experience:** 20+ years software development, 5+ years architecture. Highly experienced. Also conducts technical interviews.
+- **Learning goals:** Improve prompting skills; use AI to ship apps at much higher velocity. Wants a repeatable workflow, not just a one-off project.
+- **Creative sensibility:** Developer tooling mindset. Recently working on a CLI for env setup. Utility-first, practical aesthetics.
+- **Prior SDD experience:** Yes — structured planning is core to his architecture role. New angle is doing it with AI instead of human teams.
+- **Energy/engagement:** Direct, concise answers. Knows what he wants. Move fast, skip basics, focus on the AI-collaboration dimension.
+
+## /scope
+- **Idea evolution:** Pablo arrived with a well-defined concept from `.brain/` pre-work. The conversation shifted the framing from "flashcard generator" to "study recipe generator" — the metaphor of recipes for learning emerged organically and became central to the scope doc. The user focus narrowed from generic "students" to specifically high school students (15-17), which sharpened the design and content decisions.
+- **Pushback received:** Challenged the quiz/answer feature he liked from Scholarly and Jungle. Pablo immediately recognized it as scope creep and cut it himself: "no that might be after building that product." Also challenged YouTube support — again, Pablo self-cut without resistance. Strong instinct for scope discipline.
+- **References that resonated:** Scholarly and Jungle's visual warmth and approachability. Pablo explicitly wanted the app to feel comfortable for high school students, not developer-minimal. Anki-Decks validated the Anki-compatible export angle as a gap in the market.
+- **Key insight surfaced:** The card quality constraint — "if there are too many content we will be on the same position as reading from the article itself." This became a core design principle: distillation over duplication, 10-20 deep cards over 50 shallow ones.
+- **Architecture preference:** Pablo wants hexagonal architecture (ports and adapters) in the codebase. This is a personal quality bar, not a hackathon requirement. He sees domain/infra separation as enabling future extensibility (quiz mode, YouTube, model swaps).
+- **Deepening rounds:** 1 round. Surfaced the visual vibe (warm, student-friendly), frontend architecture approach (domain vs infra separation via hooks/services), target user refinement (high school specifically), and the card quality failure mode. All four points materially improved the scope doc.
+- **Active shaping:** Pablo drove scope cuts decisively and unprompted. The "study recipe" framing, high school focus, and architecture constraint all came from him. He accepted research examples as input but filtered them through his own vision rather than adopting suggestions passively.
+
+## /prd
+- **Scope evolution:** No major additions to scope — Pablo stayed disciplined. The conversation expanded *within* scope rather than beyond it. Key refinements: the single auto-detecting input field, the expanding textarea behavior, inline URL validation, and the two card types (question vs. fact) were all new precision that the scope doc didn't have.
+- **"What if" surprises:** The short-input edge case surfaced a non-obvious design decision — Pablo chose "try to supplement, and if you can't, generate two cards anyway" rather than showing an error. This reflects his "always give the student something" instinct.
+- **Scope guard moments:** When challenged on the animation budget (draggable placeholders, flip animation, scroll-reveal, expanding input, inline validation), Pablo self-sorted immediately: scroll-reveal and expanding input are essential, draggable placeholders and flip animation are polish. Clean, fast prioritization.
+- **Card model insight:** Pablo's note that "not all cards are about questions — maybe they are just facts" was an important refinement. This changed the card model from pure Q&A to a dual-type system (question + fact) with icon differentiation.
+- **UX instincts:** Strong product sense throughout. The "associate enjoyment with studying" framing for the loading state, the single "Export to Anki" button (no format jargon), and the auto-detecting input all came from Pablo thinking about a 16-year-old's experience, not a developer's.
+- **Deepening rounds:** 0 rounds. Pablo felt the mandatory questions covered enough ground and was ready to proceed. Given his experience level and the clarity of the scope doc, the mandatory pass was thorough enough to produce a detailed PRD.
+- **Active shaping:** Pablo drove every UX decision. The expanding textarea, inline validation, draggable placeholders, and fact-card concept all originated from him. No passive acceptance — he evaluated each suggestion against his "what would a 16-year-old do" filter.
+
+## /spec
+- **Technical decisions made:** Hexagonal architecture with clear domain/infrastructure boundary. Card types (question, fact) are domain concepts, not infrastructure. Hooks serve as frontend ports. Tab-separated CSV chosen over JSON for Anki export (native import, no plugins). Tool use with Zod schemas for structured output from Claude. Client-side export generation.
+- **What Pablo was confident about:** Domain boundary — immediately articulated that Card is domain. Hexagonal architecture pattern. Hooks-as-ports for frontend. Wanted to move fast through decisions.
+- **What was uncertain:** Initially proposed card types as infrastructure implementations. Accepted the pushback that they're domain types quickly and without resistance — suggests he was thinking aloud rather than committed to the position.
+- **Stack choices:** All pre-decided from scope phase (Next.js 14, Anthropic SDK, Readability, Tailwind, Vercel). No stack changes during /spec. Research confirmed all dependencies are actively maintained and current.
+- **Deepening rounds:** 0 rounds. Pablo felt the mandatory questions covered enough ground to generate the spec. Given his architecture background and the pre-work in `.brain/`, the mandatory pass produced sufficient detail.
+- **Active shaping:** Pablo drove the hexagonal architecture decomposition. The hooks-as-ports pattern was proposed by the agent and immediately confirmed by Pablo. The domain boundary discussion was the one moment of real dialogue — Pablo proposed card types as infrastructure, agent pushed back, Pablo agreed quickly. All other architecture proposals were accepted without modification, suggesting they matched his mental model closely.
