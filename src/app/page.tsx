@@ -7,6 +7,7 @@ import CardGrid from "@/components/CardGrid";
 import LoadingState from "@/components/LoadingState";
 import StickyHeader from "@/components/StickyHeader";
 import { createMockDeck } from "@/lib/mock-data";
+import { useDeckExport } from "@/hooks/useDeckExport";
 
 const mockDeck = createMockDeck();
 
@@ -14,11 +15,12 @@ type ViewState = "idle" | "loading" | "cards";
 
 export default function Home() {
   const [viewState, setViewState] = useState<ViewState>("idle");
+  const { exportDeck } = useDeckExport();
 
   return (
     <>
       {viewState === "cards" && (
-        <StickyHeader onExport={() => {/* wired in step 6 */}} />
+        <StickyHeader onExport={() => exportDeck(mockDeck)} />
       )}
 
       <main className="min-h-screen flex flex-col items-center gap-10 px-4 py-16 sm:py-24">
