@@ -1,54 +1,63 @@
 "use client";
 
-import { useState } from "react";
 import LandingHero from "@/components/LandingHero";
 import InputField from "@/components/InputField";
 import CardGrid from "@/components/CardGrid";
 import LoadingState from "@/components/LoadingState";
 import StickyHeader from "@/components/StickyHeader";
-import { createMockDeck } from "@/lib/mock-data";
+import { useInputDetection } from "@/hooks/useInputDetection";
+import { useCardGeneration } from "@/hooks/useCardGeneration";
 import { useDeckExport } from "@/hooks/useDeckExport";
 
-const mockDeck = createMockDeck();
-
-type ViewState = "idle" | "loading" | "cards";
-
 export default function Home() {
-  const [viewState, setViewState] = useState<ViewState>("idle");
+  const { value, inputType, setValue, isMultiline } = useInputDetection();
+  const { status, deck, error, generate, reset } = useCardGeneration();
   const { exportDeck } = useDeckExport();
+
+  const isGenerating = status === "extracting" || status === "generating";
+
+  const handleGenerate = () => {
+    if (inputType === "empty" || isGenerating) return;
+    generate(value, inputType as "url" | "text");
+  };
+
+  const handleNewGeneration = () => {
+    reset();
+    setValue("");
+  };
 
   return (
     <>
-      {viewState === "cards" && (
-        <StickyHeader onExport={() => exportDeck(mockDeck)} />
+      {status === "done" && deck && (
+        <StickyHeader onExport={() => exportDeck(deck)} />
       )}
 
       <main className="min-h-screen flex flex-col items-center gap-10 px-4 py-16 sm:py-24">
         <LandingHero />
-        <InputField />
 
-        {/* Temporary state toggle for visual testing */}
-        <div className="flex gap-2">
-          {(["idle", "loading", "cards"] as ViewState[]).map((state) => (
+        <InputField
+          value={value}
+          inputType={inputType}
+          isMultiline={isMultiline}
+          isGenerating={isGenerating}
+          error={error}
+          onValueChange={setValue}
+          onGenerate={handleGenerate}
+        />
+
+        {isGenerating && <LoadingState />}
+
+        {status === "done" && deck && (
+          <>
+            <CardGrid cards={deck.cards} totalCards={deck.totalCards} />
+
             <button
-              key={state}
-              onClick={() => setViewState(state)}
-              className={`
-                text-xs px-3 py-1.5 rounded-full border transition-colors
-                ${viewState === state
-                  ? "bg-orange-500 text-white border-orange-500"
-                  : "bg-white text-stone-500 border-stone-200 hover:border-orange-300"
-                }
-              `}
+              onClick={handleNewGeneration}
+              className="text-sm text-stone-500 hover:text-orange-500 transition-colors underline underline-offset-2"
             >
-              {state}
+              Generate new cards
             </button>
-          ))}
-        </div>
-
-        {viewState === "loading" && <LoadingState />}
-        {viewState === "cards" && (
-          <CardGrid cards={mockDeck.cards} totalCards={mockDeck.totalCards} />
+          </>
         )}
       </main>
     </>

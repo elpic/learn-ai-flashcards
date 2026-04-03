@@ -1,10 +1,27 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import { useInputDetection } from "@/hooks/useInputDetection";
+import { InputType } from "@/hooks/useInputDetection";
 
-export default function InputField() {
-  const { value, inputType, setValue, isMultiline } = useInputDetection();
+interface InputFieldProps {
+  value: string;
+  inputType: InputType;
+  isMultiline: boolean;
+  isGenerating: boolean;
+  error: string | null;
+  onValueChange: (val: string) => void;
+  onGenerate: () => void;
+}
+
+export default function InputField({
+  value,
+  inputType,
+  isMultiline,
+  isGenerating,
+  error,
+  onValueChange,
+  onGenerate,
+}: InputFieldProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-resize textarea height to fit content
@@ -17,6 +34,7 @@ export default function InputField() {
 
   const isUrl = inputType === "url";
   const isEmpty = inputType === "empty";
+  const canGenerate = !isEmpty && !isGenerating;
 
   return (
     <div className="w-full max-w-2xl flex flex-col gap-3">
@@ -55,7 +73,8 @@ export default function InputField() {
         <textarea
           ref={textareaRef}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => onValueChange(e.target.value)}
+          disabled={isGenerating}
           rows={isMultiline ? undefined : 1}
           placeholder="Paste a URL or some text you want to study..."
           aria-label="Input content to generate flashcards from"
@@ -67,38 +86,57 @@ export default function InputField() {
             outline-none
             overflow-hidden min-h-[56px]
             transition-all duration-150
+            disabled:opacity-60
           `}
         />
       </div>
+
+      {/* Error message */}
+      {error && (
+        <p className="text-red-500 text-sm font-medium px-1">{error}</p>
+      )}
 
       {/* Generate button */}
       <div className="flex justify-end">
         <button
           type="button"
-          disabled={isEmpty}
-          aria-disabled={isEmpty}
+          disabled={!canGenerate}
+          aria-disabled={!canGenerate}
+          onClick={onGenerate}
           className={`
             inline-flex items-center gap-2
             px-6 py-3 rounded-xl
             text-base font-semibold
             transition-all duration-200
             ${
-              isEmpty
+              !canGenerate
                 ? "bg-amber-100 text-amber-400 cursor-not-allowed"
                 : "bg-orange-500 text-white shadow-md shadow-orange-200 hover:bg-orange-600 hover:shadow-orange-300 active:scale-95"
             }
           `}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="w-4 h-4"
-            aria-hidden="true"
-          >
-            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-          </svg>
-          Generate flashcards
+          {isGenerating ? (
+            <>
+              <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+              Generating...
+            </>
+          ) : (
+            <>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="w-4 h-4"
+                aria-hidden="true"
+              >
+                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+              </svg>
+              Generate flashcards
+            </>
+          )}
         </button>
       </div>
     </div>
