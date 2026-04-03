@@ -46,7 +46,7 @@
   Acceptance: Clicking "Export to Anki" downloads a `.txt` file. Opening the file shows tab-separated content with front, back, and tags columns. Tags include both the topic and card type. File is valid for Anki import (tab-separated, UTF-8).
   Verify: Run `mise run dev`. Click the "Export to Anki" button. Open the downloaded file in a text editor. Confirm it's tab-separated with three columns. Confirm tags column contains topic and card type (e.g., "Photosynthesis question").
 
-- [ ] **7. Content extraction adapters**
+- [x] **7. Content extraction adapters**
   Spec ref: `spec.md > Infrastructure Layer > Readability Content Extractor` + `spec.md > Infrastructure Layer > Plain Text Content Extractor`
   What to build: Implement `ReadabilityExtractor` in `src/infrastructure/readability/readability-extractor.ts` — takes a URL, fetches it server-side with Node `fetch`, parses HTML with `jsdom`, runs `@mozilla/readability` to extract article content, returns `ExtractedContent`. Handle edge cases: unreachable URLs (throw with clear message), non-article pages (try Readability, fall back to `document.body.textContent` per spec open issue #2). Implement `PlainTextExtractor` in `src/infrastructure/readability/plain-text-extractor.ts` — minimal passthrough that wraps input text into `ExtractedContent`. Write a quick integration test or script that extracts content from a known public URL (e.g., a Wikipedia article) to verify Readability works.
   Acceptance: `ReadabilityExtractor` can fetch and parse a Wikipedia article into clean text + title. `PlainTextExtractor` wraps raw text into `ExtractedContent`. Both implement the `ContentExtractor` port interface. Edge cases (unreachable URL, non-article page) return appropriate errors or fallback content.
