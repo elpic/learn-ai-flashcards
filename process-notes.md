@@ -32,3 +32,28 @@
 - **Stack choices:** All pre-decided from scope phase (Next.js 14, Anthropic SDK, Readability, Tailwind, Vercel). No stack changes during /spec. Research confirmed all dependencies are actively maintained and current.
 - **Deepening rounds:** 0 rounds. Pablo felt the mandatory questions covered enough ground to generate the spec. Given his architecture background and the pre-work in `.brain/`, the mandatory pass produced sufficient detail.
 - **Active shaping:** Pablo drove the hexagonal architecture decomposition. The hooks-as-ports pattern was proposed by the agent and immediately confirmed by Pablo. The domain boundary discussion was the one moment of real dialogue — Pablo proposed card types as infrastructure, agent pushed back, Pablo agreed quickly. All other architecture proposals were accepted without modification, suggesting they matched his mental model closely.
+
+## /checklist
+- **Sequencing decisions:** Pablo proposed project structure → UI with visual review (Storybook-style) → infrastructure. Agent suggested mock-data-on-page instead of Storybook to save setup overhead — Pablo agreed immediately. Final sequence: scaffolding + domain types → UI components against mock data → infrastructure adapters → API wiring → polish → deploy → submit. Rationale: domain types first (everything imports them), UI second (visual feedback early), infrastructure third (isolated behind ports), wiring fourth (plug adapters into hooks), polish last.
+- **Methodology preferences:** Step-by-step mode, per-item verification, comprehension checks on, balanced check-in cadence, commit after each item.
+- **Items and estimate:** 13 items, each ~15-30 minutes. Fits within a focused build session.
+- **Confidence vs guidance:** Pablo was confident on sequencing logic — his instinct (structure → UI → infrastructure) aligned well with the dependency chain. Accepted the mock-data-over-Storybook suggestion without resistance, showing pragmatism over tooling preference.
+- **Submission planning:** Wow moments identified as clean hexagonal architecture and scroll-reveal effect. GitHub repo needs to be created (personal account). Vercel deployment planned. No demo video discussed.
+- **Tooling additions:** Created a `/build-step` Claude Code skill to codify the per-item workflow (review → implement → verify → comprehension check → commit → update checklist). Created `mise.toml` with dev tasks (dev, build, lint, typecheck, check, clean) per Pablo's request to use mise as task runner.
+- **Git workflow:** Initialized repo with initial commit on main, created `feat/project-scaffold` branch for build work. Trunk-based development.
+- **Deepening rounds:** 0 rounds. Pablo was ready to proceed after the mandatory questions. The detailed checklist items provide sufficient specification for each build step.
+- **Active shaping:** Pablo drove the Storybook idea (showing strong instinct for component isolation testing) and the mise integration (bringing his own tooling preferences). Accepted the simplified mock-data approach pragmatically. Requested more detailed checklist items and a build workflow skill — both reflect his architect mindset of wanting clear, repeatable processes.
+
+## /build
+
+### Step 1: Project scaffolding + domain types
+- What was built: Next.js 14 project initialized with App Router, TypeScript, Tailwind CSS. All dependencies installed (Anthropic SDK, Zod, Readability, jsdom). Hexagonal architecture folder structure created. Domain types implemented: Card, CardType, Deck models + ContentExtractor, CardGenerator, DeckExporter port interfaces. Mock data factory with 6 Photosynthesis cards (3 question, 3 fact).
+- Verification: `tsc --noEmit` passed with zero errors. All domain types importable. Mock data returns valid Deck. Folder structure matches spec.
+- Comprehension check: "Which directory contains the interfaces that infrastructure adapters must implement?" → "src/domain/ports/" ✓ Correct.
+- Issues: None. create-next-app required initialization in a temp directory due to existing files, then copied over.
+
+### Step 2: LandingHero + InputField + useInputDetection
+- What was built: Landing page with warm cream/orange design. LandingHero with approachable copy for teenagers. InputField with auto-expanding textarea, URL detection badge, and disabled Generate button. useInputDetection hook with regex-based URL/text/empty classification.
+- Verification: Dev server confirmed hero text visible, URL detection badge appears on URL paste, textarea expands for long text, warm vibe achieved. Fixed right padding issue - was using pr-36 always, now conditional on URL badge visibility.
+- Comprehension check: "What determines whether input is classified as a URL?" -> "Regex testing for http:// or https://" - Correct.
+- Issues: Textarea had excessive right padding (pr-36) for non-URL text to accommodate the URL badge. Fixed to conditional padding.

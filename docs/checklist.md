@@ -10,13 +10,13 @@
 
 ## Checklist
 
-- [ ] **1. Project scaffolding + domain types**
+- [x] **1. Project scaffolding + domain types**
   Spec ref: `spec.md > Architecture Overview` + `spec.md > Domain Layer` + `spec.md > File Structure`
   What to build: Initialize Next.js 14 with App Router and TypeScript. Install all dependencies from the spec (Anthropic SDK, Zod, Readability, jsdom, Tailwind). Create the full folder structure: `src/domain/models/`, `src/domain/ports/`, `src/infrastructure/anthropic/`, `src/infrastructure/readability/`, `src/infrastructure/export/`, `src/hooks/`, `src/services/`, `src/components/`. Implement all domain types — `Card`, `CardType`, `Deck` in models; `CardGenerator`, `ContentExtractor` (with `ExtractedContent`), `DeckExporter` (with `ExportedFile`) as port interfaces. Create a mock deck factory (`src/lib/mock-data.ts`) with 5-6 sample cards (mix of question and fact types, varied topics) for use in upcoming UI steps.
   Acceptance: `mise run typecheck` passes with zero errors. All domain types are importable. Mock data factory returns a valid `Deck` object. Folder structure matches the spec diagram.
   Verify: Run `mise run typecheck` and confirm zero errors. Open `src/domain/models/card.ts` and `deck.ts` — confirm the types match the spec. Open `src/lib/mock-data.ts` — confirm it exports a function that returns a `Deck` with mixed card types.
 
-- [ ] **2. LandingHero + InputField + useInputDetection**
+- [x] **2. LandingHero + InputField + useInputDetection**
   Spec ref: `spec.md > Frontend > Components > LandingHero` + `spec.md > Frontend > Components > InputField` + `spec.md > Frontend > Hooks > useInputDetection`
   What to build: Build the landing page layout in `src/app/page.tsx`. Create `LandingHero` component with a short, warm explanation targeting 15-17 year olds — approachable tone, not developer-minimal. Create `InputField` component with a single input that auto-expands into a textarea as content grows. Implement `useInputDetection` hook that detects URL vs text via regex, exposes `inputType` ("url" | "text" | "empty") and tracks validation state. Wire the hook into InputField so the UI reacts to input type changes (e.g., show a subtle URL indicator). Style with Tailwind — warm colors, rounded corners, the Jungle-inspired approachable vibe from the scope doc. Set up `globals.css` with Tailwind base and any custom font/color tokens. No generation logic yet — the "Generate" button should be visible but disabled.
   Acceptance: Landing page loads with hero text and input field visible without scrolling. Typing a URL shows URL detection feedback. Typing plain text shows text mode. Input auto-expands for long text. Visual design feels warm and student-friendly, not developer-minimal. Generate button is present but non-functional.
