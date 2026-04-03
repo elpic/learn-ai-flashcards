@@ -34,7 +34,7 @@
   Acceptance: Cards appear in a scrollable grid layout. Scrolling down reveals cards one by one with animation. The animation feels smooth and polished. All mock cards render correctly within the grid.
   Verify: Run `mise run dev`. Scroll down the page — confirm cards animate into view one at a time. Confirm the animation feels smooth, not janky. Confirm all mock cards display correctly with flip still working.
 
-- [ ] **5. LoadingState + StickyHeader**
+- [x] **5. LoadingState + StickyHeader**
   Spec ref: `spec.md > Frontend > Components > LoadingState` + `spec.md > Frontend > Components > StickyHeader`
   What to build: Create `LoadingState` component with animated placeholder card shapes that appear during generation. Use CSS animations (pulse/shimmer) for a playful feel. Keep it simple — draggable placeholders are a stretch goal per the PRD. Add a warm loading message ("Cooking up your study cards..."). Create `StickyHeader` component that appears after cards are generated — contains the "Export to Anki" button. Sticks to top of viewport while scrolling. Style the button clearly — single action, no format jargon. For now, wire a temporary state toggle so you can switch between loading state and card display to see both. Export button is non-functional yet.
   Acceptance: Loading state shows animated placeholder cards with a warm message. Sticky header appears with "Export to Anki" button when cards are visible. Header stays fixed while scrolling through cards. Header doesn't interfere with scroll-reveal animations.

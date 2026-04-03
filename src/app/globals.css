@@ -40,6 +40,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Animations ── */
+@keyframes shimmer {
+  to {
+    transform: translateX(200%);
+  }
+}
+
 /* ── Utilities ── */
 @layer utilities {
   .text-balance {
@@ -48,5 +55,9 @@ body {
 
   .shadow-warm {
     box-shadow: var(--shadow-warm);
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
   }
 }
