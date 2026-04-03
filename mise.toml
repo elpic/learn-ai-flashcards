@@ -1,0 +1,29 @@
+[tools]
+node = "20"
+
+[env]
+NODE_ENV = "development"
+
+[tasks.dev]
+description = "Start Next.js dev server"
+run = "npm run dev"
+
+[tasks.build]
+description = "Build for production"
+run = "npm run build"
+
+[tasks.lint]
+description = "Run linter"
+run = "npm run lint"
+
+[tasks.typecheck]
+description = "Run TypeScript type checking"
+run = "npx tsc --noEmit"
+
+[tasks.check]
+description = "Run lint + typecheck"
+depends = ["lint", "typecheck"]
+
+[tasks.clean]
+description = "Remove build artifacts"
+run = "rm -rf .next out node_modules/.cache"
