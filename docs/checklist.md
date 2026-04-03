@@ -40,7 +40,7 @@
   Acceptance: Loading state shows animated placeholder cards with a warm message. Sticky header appears with "Export to Anki" button when cards are visible. Header stays fixed while scrolling through cards. Header doesn't interfere with scroll-reveal animations.
   Verify: Run `mise run dev`. Toggle to loading state — confirm placeholder cards animate with a shimmer/pulse. Toggle to cards state — confirm the sticky header appears and stays fixed while scrolling. Confirm the header doesn't cover or break the scroll-reveal animation.
 
-- [ ] **6. Anki export adapter + useDeckExport hook**
+- [x] **6. Anki export adapter + useDeckExport hook**
   Spec ref: `spec.md > Infrastructure Layer > Anki Export Adapter` + `spec.md > Frontend > Hooks > useDeckExport`
   What to build: Implement `AnkiCsvExporter` class in `src/infrastructure/export/anki-csv-exporter.ts` that implements the `DeckExporter` port. Output format: tab-separated text with columns for front, back, and tags (topic + card type). File extension: `.txt`, UTF-8 encoding. Implement `useDeckExport` hook that takes a `Deck`, runs the exporter client-side, creates a Blob, and triggers download via `URL.createObjectURL`. Filename pattern: `{deck.title}-anki.txt`. Wire the StickyHeader's "Export to Anki" button to the hook using the mock deck.
   Acceptance: Clicking "Export to Anki" downloads a `.txt` file. Opening the file shows tab-separated content with front, back, and tags columns. Tags include both the topic and card type. File is valid for Anki import (tab-separated, UTF-8).

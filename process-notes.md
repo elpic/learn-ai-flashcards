@@ -75,3 +75,9 @@
 - Verification: Learner confirmed both components look great - loading shimmer animates, sticky header stays fixed while scrolling, scroll-reveal animations unaffected.
 - Comprehension check: "What CSS technique makes the header stay visible at the top?" - "position: sticky" - Correct.
 - Issues: None.
+
+### Step 6: Anki export adapter + useDeckExport hook
+- What was built: AnkiCsvExporter class implementing DeckExporter port - converts a Deck into tab-separated text (front, back, tags columns). useDeckExport hook that creates a Blob from the exported data and triggers a browser download via URL.createObjectURL. Wired the StickyHeader's "Export to Anki" button to the hook using the mock deck.
+- Verification: Learner confirmed export button downloads a .txt file with correct tab-separated format and topic+type tags.
+- Comprehension check: "What character separates the columns in the exported file?" - "Comma" - Incorrect. Explained it's the tab character (\t), Anki's native import format.
+- Issues: None.
