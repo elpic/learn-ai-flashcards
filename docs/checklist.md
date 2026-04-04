@@ -64,7 +64,7 @@
   Acceptance: Pasting a URL and clicking Generate fetches the article and produces real flashcards. Pasting text and clicking Generate produces flashcards from that text. Loading state shows during generation. Generated cards display in the CardGrid with scroll-reveal. Errors show friendly messages. The full flow works end-to-end.
   Verify: Run `mise run dev`. Paste a Wikipedia URL, click Generate. Confirm: loading state appears, then real cards render with scroll-reveal. Flip a card — confirm it works. Paste a paragraph of text, click Generate — confirm cards appear. Paste an invalid URL — confirm a friendly error message appears. Export the generated cards — confirm the Anki file contains real content.
 
-- [ ] **10. URL validation endpoint**
+- [x] **10. URL validation endpoint**
   Spec ref: `spec.md > Frontend > URL Validation Endpoint` + `spec.md > Frontend > Hooks > useInputDetection`
   What to build: Create `GET /api/validate-url` Route Handler in `src/app/api/validate-url/route.ts`. It takes a `?url=` query param, performs a server-side HEAD request with a 5-second timeout, and returns `{ reachable: boolean }`. Wire `useInputDetection` to call this endpoint when a URL is detected — debounce the call (300-500ms after typing stops). Show inline validation feedback on the InputField: checkmark icon for reachable URLs, error icon + message for unreachable ones. Disable the Generate button for invalid URLs.
   Acceptance: Pasting a valid URL shows a checkmark after a brief delay. Pasting an invalid/unreachable URL shows an error icon with a friendly message. Generate button is disabled for invalid URLs. Validation doesn't fire on every keystroke (debounced).

@@ -93,3 +93,9 @@
 - Verification: Test script ran successfully - photosynthesis passage produced 12 cards (mix of question/fact types, student-friendly language). Single sentence about mitochondria produced 6 cards (Claude expanded context as instructed). All cards have valid type, front, back, topic, and cardNumber fields.
 - Comprehension check: Pending learner response.
 - Issues: None.
+
+### Step 10: URL validation endpoint
+- What was built: GET /api/validate-url Route Handler with server-side HEAD request and 5-second timeout. useInputDetection hook updated with debounced (400ms) URL validation, abort controller for cancelling in-flight requests. InputField updated with four validation states: "URL detected" (default), "Checking..." (spinner), green "URL looks good" (checkmark), red "Unreachable" (error icon + message). Border color reflects validation state. Generate button disabled for invalid/validating URLs.
+- Verification: Learner confirmed it looks good.
+- Comprehension check: "What prevents the validation endpoint from being called on every single keystroke?" - "A debounce timer (400ms delay)" - Correct.
+- Issues: None.
