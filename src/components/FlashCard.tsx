@@ -15,7 +15,7 @@ export default function FlashCard({ card, totalCards }: FlashCardProps) {
 
   return (
     <div
-      className="w-full max-w-sm perspective-[800px] cursor-pointer"
+      className="w-full max-w-[calc(100vw-2rem)] sm:max-w-sm perspective-[800px] cursor-pointer"
       onClick={() => setIsFlipped((prev) => !prev)}
       role="button"
       tabIndex={0}
@@ -29,8 +29,8 @@ export default function FlashCard({ card, totalCards }: FlashCardProps) {
     >
       <div
         className={`
-          relative w-full min-h-[220px] transition-transform duration-500
-          [transform-style:preserve-3d]
+          relative w-full min-h-[220px] transition-transform duration-500 ease-in-out
+          [transform-style:preserve-3d] will-change-transform
           ${isFlipped ? "[transform:rotateY(180deg)]" : ""}
         `}
       >

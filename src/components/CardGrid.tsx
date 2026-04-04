@@ -21,7 +21,7 @@ function RevealWrapper({ children, index }: { children: React.ReactNode; index: 
       ([entry]) => {
         if (entry.isIntersecting) {
           // Stagger the reveal based on index for cards visible on initial load
-          const delay = index * 120;
+          const delay = index * 150;
           setTimeout(() => setIsVisible(true), delay);
           observer.unobserve(el);
         }

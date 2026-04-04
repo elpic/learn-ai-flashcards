@@ -64,13 +64,13 @@
   Acceptance: Pasting a URL and clicking Generate fetches the article and produces real flashcards. Pasting text and clicking Generate produces flashcards from that text. Loading state shows during generation. Generated cards display in the CardGrid with scroll-reveal. Errors show friendly messages. The full flow works end-to-end.
   Verify: Run `mise run dev`. Paste a Wikipedia URL, click Generate. Confirm: loading state appears, then real cards render with scroll-reveal. Flip a card — confirm it works. Paste a paragraph of text, click Generate — confirm cards appear. Paste an invalid URL — confirm a friendly error message appears. Export the generated cards — confirm the Anki file contains real content.
 
-- [ ] **10. URL validation endpoint**
+- [x] **10. URL validation endpoint**
   Spec ref: `spec.md > Frontend > URL Validation Endpoint` + `spec.md > Frontend > Hooks > useInputDetection`
   What to build: Create `GET /api/validate-url` Route Handler in `src/app/api/validate-url/route.ts`. It takes a `?url=` query param, performs a server-side HEAD request with a 5-second timeout, and returns `{ reachable: boolean }`. Wire `useInputDetection` to call this endpoint when a URL is detected — debounce the call (300-500ms after typing stops). Show inline validation feedback on the InputField: checkmark icon for reachable URLs, error icon + message for unreachable ones. Disable the Generate button for invalid URLs.
   Acceptance: Pasting a valid URL shows a checkmark after a brief delay. Pasting an invalid/unreachable URL shows an error icon with a friendly message. Generate button is disabled for invalid URLs. Validation doesn't fire on every keystroke (debounced).
   Verify: Run `mise run dev`. Paste a valid URL (e.g., Wikipedia) — confirm checkmark appears after ~500ms. Paste `https://thisisnotarealurl12345.com` — confirm error feedback appears. Confirm Generate button is disabled for invalid URLs. Type a URL character by character — confirm validation doesn't fire until you stop typing.
 
-- [ ] **11. Polish + edge cases**
+- [x] **11. Polish + edge cases**
   Spec ref: `spec.md > Infrastructure Layer > Anthropic Card Generator` (short input) + `prd.md > What We'd Add` (animation polish)
   What to build: Test and refine short input handling — paste a single sentence, confirm Claude supplements or generates 2 cards. Test and refine error states — ensure all error messages are student-friendly and actionable. Responsive design check — confirm the layout works well on mobile viewport sizes (cards stack, input is usable, sticky header works). Fine-tune animations — scroll-reveal timing, flip animation smoothness, loading shimmer. Ensure the sticky header doesn't conflict with scroll-reveal (per spec open issue #3 — header yields to animations if needed). Add the expanding input transition animation (smooth grow from input to textarea).
   Acceptance: Short input produces cards without errors. Error messages are clear and helpful. Layout is responsive on mobile. Animations are smooth and polished. Sticky header doesn't interfere with card reveal.

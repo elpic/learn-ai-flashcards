@@ -93,3 +93,15 @@
 - Verification: Test script ran successfully - photosynthesis passage produced 12 cards (mix of question/fact types, student-friendly language). Single sentence about mitochondria produced 6 cards (Claude expanded context as instructed). All cards have valid type, front, back, topic, and cardNumber fields.
 - Comprehension check: Pending learner response.
 - Issues: None.
+
+### Step 10: URL validation endpoint
+- What was built: GET /api/validate-url Route Handler with server-side HEAD request and 5-second timeout. useInputDetection hook updated with debounced (400ms) URL validation, abort controller for cancelling in-flight requests. InputField updated with four validation states: "URL detected" (default), "Checking..." (spinner), green "URL looks good" (checkmark), red "Unreachable" (error icon + message). Border color reflects validation state. Generate button disabled for invalid/validating URLs.
+- Verification: Learner confirmed it looks good.
+- Comprehension check: "What prevents the validation endpoint from being called on every single keystroke?" - "A debounce timer (400ms delay)" - Correct.
+- Issues: None.
+
+### Step 11: Polish + edge cases
+- What was built: Smooth expanding input transition (CSS height transition with reflow trick). Responsive mobile layout (cards fill width on small screens, sticky header text/button scales down). Sticky header offset (top padding when header visible so cards aren't hidden). Student-friendly error messages (warmer, actionable tone for teens across all error paths). Phase-aware loading state (shows "Reading that page..." during extraction, "Cooking up your study cards..." during generation). Animation polish (scroll-reveal stagger increased to 150ms, flip animation uses ease-in-out + will-change-transform for GPU acceleration).
+- Verification: Learner confirmed everything is working fine.
+- Comprehension check: "What CSS property did we use on the flip container to hint the browser to use GPU acceleration?" - Learner deferred to agent. Answer: "will-change: transform" (B) - promotes element to its own compositing layer for smoother animation.
+- Issues: ESLint flagged bare `el.offsetHeight` expression (reflow trick) - fixed with `void` prefix.

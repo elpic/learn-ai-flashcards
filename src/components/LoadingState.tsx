@@ -39,11 +39,19 @@ function PlaceholderCard({ index }: { index: number }) {
   );
 }
 
-export default function LoadingState() {
+interface LoadingStateProps {
+  phase?: "extracting" | "generating";
+}
+
+export default function LoadingState({ phase = "generating" }: LoadingStateProps) {
+  const message = phase === "extracting"
+    ? "Reading that page for you..."
+    : "Cooking up your study cards...";
+
   return (
     <div className="w-full max-w-2xl flex flex-col items-center gap-6">
-      <p className="text-stone-500 text-sm font-medium animate-pulse">
-        Cooking up your study cards...
+      <p className="text-stone-500 text-sm font-medium animate-pulse transition-opacity duration-300">
+        {message}
       </p>
       {[0, 1, 2].map((i) => (
         <PlaceholderCard key={i} index={i} />
