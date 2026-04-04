@@ -10,7 +10,7 @@ import { useCardGeneration } from "@/hooks/useCardGeneration";
 import { useDeckExport } from "@/hooks/useDeckExport";
 
 export default function Home() {
-  const { value, inputType, setValue, isMultiline } = useInputDetection();
+  const { value, inputType, setValue, isMultiline, isValidating, validationResult } = useInputDetection();
   const { status, deck, error, generate, reset } = useCardGeneration();
   const { exportDeck } = useDeckExport();
 
@@ -40,6 +40,8 @@ export default function Home() {
           inputType={inputType}
           isMultiline={isMultiline}
           isGenerating={isGenerating}
+          isValidating={isValidating}
+          validationResult={validationResult}
           error={error}
           onValueChange={setValue}
           onGenerate={handleGenerate}
