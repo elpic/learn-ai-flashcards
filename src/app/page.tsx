@@ -14,7 +14,7 @@ export default function Home() {
   const { status, deck, error, generate, reset } = useCardGeneration();
   const { exportDeck } = useDeckExport();
 
-  const isGenerating = status === "extracting" || status === "generating";
+  const isGenerating = status === "generating";
 
   const handleGenerate = () => {
     if (inputType === "empty" || isGenerating) return;
@@ -47,7 +47,7 @@ export default function Home() {
           onGenerate={handleGenerate}
         />
 
-        {isGenerating && <LoadingState phase={status === "extracting" ? "extracting" : "generating"} />}
+        {isGenerating && <LoadingState />}
 
         {status === "done" && deck && (
           <>

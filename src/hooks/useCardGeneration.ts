@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { Deck } from "@/domain/models/deck";
 import { generateCards } from "@/services/api-client";
 
-export type GenerationStatus = "idle" | "extracting" | "generating" | "done" | "error";
+export type GenerationStatus = "idle" | "generating" | "done" | "error";
 
 export interface UseCardGenerationReturn {
   status: GenerationStatus;
@@ -20,17 +20,11 @@ export function useCardGeneration(): UseCardGenerationReturn {
   const [error, setError] = useState<string | null>(null);
 
   const generate = useCallback(async (input: string, type: "url" | "text") => {
-    setStatus("extracting");
+    setStatus("generating");
     setDeck(null);
     setError(null);
 
     try {
-      // Brief extracting phase, then generating
-      // The API handles both steps - we show "extracting" briefly for URL inputs
-      if (type === "url") {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-      }
-      setStatus("generating");
 
       const result = await generateCards({ input, type });
       setDeck(result);
