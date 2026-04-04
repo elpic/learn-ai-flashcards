@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function LandingHero() {
   return (
     <div className="flex flex-col items-center text-center gap-4 px-4">

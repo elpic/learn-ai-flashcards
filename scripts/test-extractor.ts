@@ -1,5 +1,5 @@
-import { ReadabilityExtractor } from "./readability-extractor";
-import { PlainTextExtractor } from "./plain-text-extractor";
+import { ReadabilityExtractor } from "@/infrastructure/readability/readability-extractor";
+import { PlainTextExtractor } from "@/infrastructure/readability/plain-text-extractor";
 
 async function main() {
   console.log("=== ReadabilityExtractor Test ===\n");

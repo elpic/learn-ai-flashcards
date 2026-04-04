@@ -1,4 +1,4 @@
-import { AnthropicCardGenerator } from "./anthropic-card-generator";
+import { AnthropicCardGenerator } from "@/infrastructure/anthropic/anthropic-card-generator";
 import { ExtractedContent } from "@/domain/ports/content-extractor";
 
 async function testSubstantialContent() {
