@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isUrlSafeForFetch } from "@/lib/url-safety";
 
 export async function GET(request: NextRequest) {
   const url = request.nextUrl.searchParams.get("url");
@@ -7,9 +8,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ reachable: false }, { status: 400 });
   }
 
-  try {
-    new URL(url);
-  } catch {
+  if (!isUrlSafeForFetch(url)) {
     return NextResponse.json({ reachable: false });
   }
 

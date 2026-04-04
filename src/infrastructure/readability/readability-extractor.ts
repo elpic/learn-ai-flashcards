@@ -4,9 +4,16 @@ import {
   ContentExtractor,
   ExtractedContent,
 } from "@/domain/ports/content-extractor";
+import { isUrlSafeForFetch } from "@/lib/url-safety";
 
 export class ReadabilityExtractor implements ContentExtractor {
   async extract(url: string): Promise<ExtractedContent> {
+    if (!isUrlSafeForFetch(url)) {
+      throw new Error(
+        "That URL isn't allowed - please use a public web address."
+      );
+    }
+
     let response: Response;
     try {
       response = await fetch(url, {

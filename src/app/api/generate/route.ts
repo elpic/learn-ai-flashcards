@@ -6,8 +6,10 @@ import { ReadabilityExtractor } from "@/infrastructure/readability/readability-e
 import { PlainTextExtractor } from "@/infrastructure/readability/plain-text-extractor";
 import { AnthropicCardGenerator } from "@/infrastructure/anthropic/anthropic-card-generator";
 
+const MAX_INPUT_LENGTH = 50_000;
+
 const RequestBodySchema = z.object({
-  input: z.string().min(1),
+  input: z.string().min(1).max(MAX_INPUT_LENGTH),
   type: z.enum(["url", "text"]),
 });
 
