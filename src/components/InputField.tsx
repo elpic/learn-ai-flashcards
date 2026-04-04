@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import { InputType } from "@/hooks/useInputDetection";
+import { InputType, ValidationResult } from "@/hooks/useInputDetection";
 
 interface InputFieldProps {
   value: string;
   inputType: InputType;
   isMultiline: boolean;
   isGenerating: boolean;
+  isValidating: boolean;
+  validationResult: ValidationResult | null;
   error: string | null;
   onValueChange: (val: string) => void;
   onGenerate: () => void;
@@ -18,6 +20,8 @@ export default function InputField({
   inputType,
   isMultiline,
   isGenerating,
+  isValidating,
+  validationResult,
   error,
   onValueChange,
   onGenerate,
@@ -34,7 +38,18 @@ export default function InputField({
 
   const isUrl = inputType === "url";
   const isEmpty = inputType === "empty";
-  const canGenerate = !isEmpty && !isGenerating;
+  const urlInvalid =
+    isUrl && validationResult !== null && !validationResult.reachable;
+  const canGenerate = !isEmpty && !isGenerating && !isValidating && !urlInvalid;
+
+  // Determine border color based on validation state
+  const borderClass = isUrl
+    ? urlInvalid
+      ? "border-red-300 shadow-red-100"
+      : validationResult?.reachable
+        ? "border-green-300 shadow-green-100"
+        : "border-orange-300 shadow-orange-100"
+    : "border-amber-200 focus-within:border-orange-400 focus-within:shadow-orange-100";
 
   return (
     <div className="w-full max-w-2xl flex flex-col gap-3">
@@ -43,30 +58,98 @@ export default function InputField({
         className={`
           relative w-full rounded-2xl border-2 bg-white shadow-warm
           transition-all duration-200
-          ${
-            isUrl
-              ? "border-orange-300 shadow-orange-100"
-              : "border-amber-200 focus-within:border-orange-400 focus-within:shadow-orange-100"
-          }
+          ${borderClass}
         `}
       >
-        {/* URL badge - only shown when a URL is detected */}
+        {/* URL validation badge */}
         {isUrl && (
-          <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-orange-100 text-orange-600 text-xs font-semibold px-2.5 py-1 rounded-full pointer-events-none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="w-3 h-3"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
-                clipRule="evenodd"
-              />
-            </svg>
-            URL detected
+          <div
+            className={`absolute top-3 right-3 flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full pointer-events-none transition-all duration-200 ${
+              isValidating
+                ? "bg-amber-50 text-amber-500"
+                : urlInvalid
+                  ? "bg-red-50 text-red-500"
+                  : validationResult?.reachable
+                    ? "bg-green-50 text-green-600"
+                    : "bg-orange-100 text-orange-600"
+            }`}
+          >
+            {isValidating ? (
+              <>
+                <svg
+                  className="w-3 h-3 animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  />
+                </svg>
+                Checking...
+              </>
+            ) : urlInvalid ? (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Unreachable
+              </>
+            ) : validationResult?.reachable ? (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                URL looks good
+              </>
+            ) : (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                URL detected
+              </>
+            )}
           </div>
         )}
 
@@ -91,7 +174,14 @@ export default function InputField({
         />
       </div>
 
-      {/* Error message */}
+      {/* Validation error message */}
+      {urlInvalid && validationResult?.error && (
+        <p className="text-red-500 text-sm font-medium px-1">
+          {validationResult.error}
+        </p>
+      )}
+
+      {/* Generation error message */}
       {error && (
         <p className="text-red-500 text-sm font-medium px-1">{error}</p>
       )}
@@ -117,9 +207,25 @@ export default function InputField({
         >
           {isGenerating ? (
             <>
-              <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              <svg
+                className="w-4 h-4 animate-spin"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                />
               </svg>
               Generating...
             </>
