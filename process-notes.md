@@ -102,6 +102,6 @@
 
 ### Step 11: Polish + edge cases
 - What was built: Smooth expanding input transition (CSS height transition with reflow trick). Responsive mobile layout (cards fill width on small screens, sticky header text/button scales down). Sticky header offset (top padding when header visible so cards aren't hidden). Student-friendly error messages (warmer, actionable tone for teens across all error paths). Phase-aware loading state (shows "Reading that page..." during extraction, "Cooking up your study cards..." during generation). Animation polish (scroll-reveal stagger increased to 150ms, flip animation uses ease-in-out + will-change-transform for GPU acceleration).
-- Verification: Pending learner response.
-- Comprehension check: Pending learner response.
+- Verification: Learner confirmed everything is working fine.
+- Comprehension check: "What CSS property did we use on the flip container to hint the browser to use GPU acceleration?" - Learner deferred to agent. Answer: "will-change: transform" (B) - promotes element to its own compositing layer for smoother animation.
 - Issues: ESLint flagged bare `el.offsetHeight` expression (reflow trick) - fixed with `void` prefix.
