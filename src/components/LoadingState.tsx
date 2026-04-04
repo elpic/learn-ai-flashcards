@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 function PlaceholderCard({ index }: { index: number }) {
   return (
     <div
@@ -39,14 +37,8 @@ function PlaceholderCard({ index }: { index: number }) {
   );
 }
 
-interface LoadingStateProps {
-  phase?: "extracting" | "generating";
-}
-
-export default function LoadingState({ phase = "generating" }: LoadingStateProps) {
-  const message = phase === "extracting"
-    ? "Reading that page for you..."
-    : "Cooking up your study cards...";
+export default function LoadingState() {
+  const message = "Cooking up your study cards...";
 
   return (
     <div className="w-full max-w-2xl flex flex-col items-center gap-6">

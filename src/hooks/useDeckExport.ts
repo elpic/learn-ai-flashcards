@@ -2,11 +2,12 @@
 
 import { useCallback } from "react";
 import { Deck } from "@/domain/models/deck";
+import { DeckExporter } from "@/domain/ports/deck-exporter";
 import { AnkiCsvExporter } from "@/infrastructure/export/anki-csv-exporter";
 
-const exporter = new AnkiCsvExporter();
+const defaultExporter: DeckExporter = new AnkiCsvExporter();
 
-export function useDeckExport() {
+export function useDeckExport(exporter: DeckExporter = defaultExporter) {
   const exportDeck = useCallback((deck: Deck) => {
     const file = exporter.export(deck);
 

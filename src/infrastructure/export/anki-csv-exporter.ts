@@ -6,7 +6,9 @@ export class AnkiCsvExporter implements DeckExporter {
     const rows = deck.cards.map((card) => {
       const front = this.escapeField(card.front);
       const back = this.escapeField(card.back);
-      const tags = `${card.topic} ${card.type}`;
+      const topicTag = card.topic.replace(/ /g, "_");
+      const typeTag = card.type.replace(/ /g, "_");
+      const tags = this.escapeField(`${topicTag} ${typeTag}`);
       return `${front}\t${back}\t${tags}`;
     });
 
