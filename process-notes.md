@@ -99,3 +99,9 @@
 - Verification: Learner confirmed it looks good.
 - Comprehension check: "What prevents the validation endpoint from being called on every single keystroke?" - "A debounce timer (400ms delay)" - Correct.
 - Issues: None.
+
+### Step 11: Polish + edge cases
+- What was built: Smooth expanding input transition (CSS height transition with reflow trick). Responsive mobile layout (cards fill width on small screens, sticky header text/button scales down). Sticky header offset (top padding when header visible so cards aren't hidden). Student-friendly error messages (warmer, actionable tone for teens across all error paths). Phase-aware loading state (shows "Reading that page..." during extraction, "Cooking up your study cards..." during generation). Animation polish (scroll-reveal stagger increased to 150ms, flip animation uses ease-in-out + will-change-transform for GPU acceleration).
+- Verification: Pending learner response.
+- Comprehension check: Pending learner response.
+- Issues: ESLint flagged bare `el.offsetHeight` expression (reflow trick) - fixed with `void` prefix.
