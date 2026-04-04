@@ -76,6 +76,31 @@
   Acceptance: Short input produces cards without errors. Error messages are clear and helpful. Layout is responsive on mobile. Animations are smooth and polished. Sticky header doesn't interfere with card reveal.
   Verify: Run `mise run dev`. Test: paste one sentence → confirm cards generate. Test: resize to mobile width → confirm layout adapts. Test: scroll through cards → confirm reveal animation + sticky header coexist. Test: flip multiple cards rapidly → confirm animation stays smooth. Overall: would a 16-year-old find this app inviting and easy to use?
 
+## Architecture Review
+
+- [x] **R1. Fix Anki tag format for multi-word topics** (`anki-csv-exporter.ts`)
+  Replace spaces with underscores in topic/type tags so Anki imports them correctly.
+
+- [ ] **R2. Add Zod validation on generate route** (`generate/route.ts`)
+  Validate request body with Zod instead of bare type assertion. Reject malformed payloads with 400.
+
+- [ ] **R3. Add SSRF protection + input length limits** (`validate-url/route.ts`, `readability-extractor.ts`, `generate/route.ts`)
+  Block private IPs/localhost in URL endpoints. Add character limit on text input.
+
+- [ ] **R4. Add rate limiting on API routes** (`generate/route.ts`, `validate-url/route.ts`)
+  Basic per-IP rate limiting to prevent abuse and runaway API costs.
+
+- [ ] **R5. Fix useDeckExport hexagonal violation** (`useDeckExport.ts`)
+  Remove direct import of concrete AnkiCsvExporter from the hook. Inject via factory or parameter.
+
+- [ ] **R6. Remove artificial delay in useCardGeneration** (`useCardGeneration.ts`)
+  Remove the hardcoded 500ms setTimeout for URL inputs.
+
+- [ ] **R7. Cleanup: test files, unused mock data, unnecessary imports, duplicated SVGs**
+  Move test files out of src/, remove unused mock-data.ts, remove unnecessary React imports, extract spinner component.
+
+---
+
 - [ ] **12. GitHub repo + Vercel deployment**
   Spec ref: `spec.md > Runtime & Deployment`
   What to build: Create a GitHub repo on the user's personal account with a descriptive name, description, and topic tags (nextjs, typescript, ai, flashcards, hackathon, hexagonal-architecture). Push all code. Set up Vercel deployment connected to the GitHub repo — configure `ANTHROPIC_API_KEY` as an environment variable in Vercel. Deploy and verify the live URL works end-to-end. Add the live URL to `NEXT_PUBLIC_APP_URL`. Confirm the deployed app can generate cards from a URL and from pasted text.
