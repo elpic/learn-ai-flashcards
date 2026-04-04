@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ContentExtractor } from "@/domain/ports/content-extractor";
+import { CardGenerator } from "@/domain/ports/card-generator";
 import { ReadabilityExtractor } from "@/infrastructure/readability/readability-extractor";
 import { PlainTextExtractor } from "@/infrastructure/readability/plain-text-extractor";
 import { AnthropicCardGenerator } from "@/infrastructure/anthropic/anthropic-card-generator";
 
-const readabilityExtractor = new ReadabilityExtractor();
-const plainTextExtractor = new PlainTextExtractor();
-const cardGenerator = new AnthropicCardGenerator();
+// Composition root - adapters are wired to ports here
+const extractors: Record<"url" | "text", ContentExtractor> = {
+  url: new ReadabilityExtractor(),
+  text: new PlainTextExtractor(),
+};
+const cardGenerator: CardGenerator = new AnthropicCardGenerator();
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,8 +27,7 @@ export async function POST(request: NextRequest) {
     // Step 1: Extract content
     let extracted;
     try {
-      const extractor = type === "url" ? readabilityExtractor : plainTextExtractor;
-      extracted = await extractor.extract(input);
+      extracted = await extractors[type].extract(input);
     } catch (err) {
       const message = err instanceof Error
         ? err.message
