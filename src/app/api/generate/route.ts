@@ -5,6 +5,10 @@ import { CardGenerator } from "@/domain/ports/card-generator";
 import { ReadabilityExtractor } from "@/infrastructure/readability/readability-extractor";
 import { PlainTextExtractor } from "@/infrastructure/readability/plain-text-extractor";
 import { AnthropicCardGenerator } from "@/infrastructure/anthropic/anthropic-card-generator";
+import { createRateLimiter } from "@/lib/rate-limit";
+
+// 10 requests per minute per IP
+const rateLimiter = createRateLimiter(10, 60_000);
 
 const MAX_INPUT_LENGTH = 50_000;
 
@@ -21,6 +25,15 @@ const extractors: Record<"url" | "text", ContentExtractor> = {
 const cardGenerator: CardGenerator = new AnthropicCardGenerator();
 
 export async function POST(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const { allowed } = rateLimiter.check(ip);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "You're sending requests too fast - wait a moment and try again!", code: "RATE_LIMITED" },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await request.json();
     const parsed = RequestBodySchema.safeParse(body);
