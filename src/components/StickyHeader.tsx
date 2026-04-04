@@ -10,12 +10,12 @@ export default function StickyHeader({ onExport }: StickyHeaderProps) {
   return (
     <div className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-amber-200 shadow-sm">
       <div className="max-w-2xl mx-auto flex items-center justify-between px-4 py-3">
-        <span className="text-sm font-semibold text-stone-700">
+        <span className="text-xs sm:text-sm font-semibold text-stone-700">
           Your flashcards are ready
         </span>
         <button
           onClick={onExport}
-          className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors"
+          className="inline-flex items-center gap-1.5 sm:gap-2 bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-full transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

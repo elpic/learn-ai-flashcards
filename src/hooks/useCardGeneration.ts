@@ -38,7 +38,7 @@ export function useCardGeneration(): UseCardGenerationReturn {
     } catch (err) {
       const message = err instanceof Error
         ? err.message
-        : "Something went wrong - please try again.";
+        : "Something went wrong - give it another try!";
       setError(message);
       setStatus("error");
     }

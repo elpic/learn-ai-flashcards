@@ -32,7 +32,7 @@ export default function Home() {
         <StickyHeader onExport={() => exportDeck(deck)} />
       )}
 
-      <main className="min-h-screen flex flex-col items-center gap-10 px-4 py-16 sm:py-24">
+      <main className={`min-h-screen flex flex-col items-center gap-10 px-4 py-16 sm:py-24 ${status === "done" && deck ? "pt-24 sm:pt-28" : ""}`}>
         <LandingHero />
 
         <InputField
@@ -47,7 +47,7 @@ export default function Home() {
           onGenerate={handleGenerate}
         />
 
-        {isGenerating && <LoadingState />}
+        {isGenerating && <LoadingState phase={status === "extracting" ? "extracting" : "generating"} />}
 
         {status === "done" && deck && (
           <>

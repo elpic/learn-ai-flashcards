@@ -28,12 +28,18 @@ export default function InputField({
 }: InputFieldProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-resize textarea height to fit content
+  // Auto-resize textarea height to fit content with smooth transition
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
+    // Temporarily remove transition to measure, then apply
+    el.style.transition = "none";
     el.style.height = "auto";
-    el.style.height = `${el.scrollHeight}px`;
+    const target = el.scrollHeight;
+    // Force reflow so the browser registers the "auto" height
+    void el.offsetHeight;
+    el.style.transition = "height 200ms ease-out";
+    el.style.height = `${target}px`;
   }, [value]);
 
   const isUrl = inputType === "url";
