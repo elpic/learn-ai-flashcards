@@ -81,22 +81,22 @@
 - [x] **R1. Fix Anki tag format for multi-word topics** (`anki-csv-exporter.ts`)
   Replace spaces with underscores in topic/type tags so Anki imports them correctly.
 
-- [ ] **R2. Add Zod validation on generate route** (`generate/route.ts`)
+- [x] **R2. Add Zod validation on generate route** (`generate/route.ts`)
   Validate request body with Zod instead of bare type assertion. Reject malformed payloads with 400.
 
-- [ ] **R3. Add SSRF protection + input length limits** (`validate-url/route.ts`, `readability-extractor.ts`, `generate/route.ts`)
+- [x] **R3. Add SSRF protection + input length limits** (`validate-url/route.ts`, `readability-extractor.ts`, `generate/route.ts`)
   Block private IPs/localhost in URL endpoints. Add character limit on text input.
 
-- [ ] **R4. Add rate limiting on API routes** (`generate/route.ts`, `validate-url/route.ts`)
+- [x] **R4. Add rate limiting on API routes** (`generate/route.ts`, `validate-url/route.ts`)
   Basic per-IP rate limiting to prevent abuse and runaway API costs.
 
-- [ ] **R5. Fix useDeckExport hexagonal violation** (`useDeckExport.ts`)
+- [x] **R5. Fix useDeckExport hexagonal violation** (`useDeckExport.ts`)
   Remove direct import of concrete AnkiCsvExporter from the hook. Inject via factory or parameter.
 
-- [ ] **R6. Remove artificial delay in useCardGeneration** (`useCardGeneration.ts`)
+- [x] **R6. Remove artificial delay in useCardGeneration** (`useCardGeneration.ts`)
   Remove the hardcoded 500ms setTimeout for URL inputs.
 
-- [ ] **R7. Cleanup: test files, unused mock data, unnecessary imports, duplicated SVGs**
+- [x] **R7. Cleanup: test files, unused mock data, unnecessary imports, duplicated SVGs**
   Move test files out of src/, remove unused mock-data.ts, remove unnecessary React imports, extract spinner component.
 
 ---
